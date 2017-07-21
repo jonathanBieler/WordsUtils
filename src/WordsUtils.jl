@@ -9,25 +9,25 @@ type WordList{T<:AbstractString}
     words::Array{T,1}
     WordList(w::Array{T,1}) = new(w)
 end
-WordList() = WordList{String}(Array(String,0))
+WordList() = WordList{String}(Array{String}(0))
 WordList{T<:AbstractString}(w::Array{T,1}) = WordList{T}(w)
 
 function startswith{T<:AbstractString}(l::WordList{T},prefix::T)
-    out = Array(T,0)
+    out = Array{T}(0)
     for w in l.words
         startswith(w,prefix) && push!(out,w)
     end
     out
 end
 function endswith{T<:AbstractString}(l::WordList{T},prefix::T)
-    out = Array(T,0)
+    out = Array{T}(0)
     for w in l.words
         endswith(w,prefix) && push!(out,w)
     end
     out
 end
 function search{T<:AbstractString}(l::WordList{T},prefix::T)
-    out = Array(T,0)
+    out = Array{T}(0)
     for w in l.words
         r = search(w,prefix)
         r.start > 0 && push!(out,w)
@@ -38,7 +38,7 @@ end
 function loadwordlist()
     #http://wordlist.aspell.net/12dicts/
     w = open(joinpath(HOMEDIR,"..","data","2of12.txt")) do f
-        w = Array(String,0)
+        w = Array{String}(0)
         for l in eachline(f)
             push!(w,l[1:end-2])
         end
